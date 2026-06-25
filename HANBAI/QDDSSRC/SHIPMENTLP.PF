@@ -1,0 +1,34 @@
+      *===============================================================
+      * 物理ファイル: SHIPMENTLP (出荷明細)
+      * ライブラリ: DEMOAPP
+      * 説明: 出荷の商品明細管理
+      *===============================================================
+     A                                      UNIQUE
+     A          R SHPLREC
+     A                                      TEXT('出荷明細レコード')
+     A*
+     A* キーフィールド（複合キー）
+     A            SHPID         18P 0       COLHDG('出荷ID')
+     A                                      TEXT('出荷ID')
+     A            LINENO         9P 0       COLHDG('明細' '行番号')
+     A                                      TEXT('明細行番号')
+     A*
+     A* 受注明細参照
+     A            SOLNO          9P 0       COLHDG('受注明細' '行番号')
+     A                                      TEXT('受注明細行番号')
+     A*
+     A* 商品情報
+     A            ITEMID         9P 0       COLHDG('商品ID')
+     A                                      TEXT('商品ID')
+     A*
+     A* 出荷数量
+     A            SHPQTY        15P 3       COLHDG('出荷数量')
+     A                                      TEXT('出荷数量')
+     A*
+     A* ロット情報
+     A            LOTNO         30A         COLHDG('ロット' '番号')
+     A                                      TEXT('ロット番号')
+     A*
+     A* キー定義
+     A          K SHPID
+     A          K LINENO

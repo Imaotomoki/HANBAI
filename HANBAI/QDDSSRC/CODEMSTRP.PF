@@ -1,0 +1,16 @@
+     A*=====================================================================
+     A* ファイル名: CODEMSTRP
+     A* 説明: コードマスタ物理ファイル
+     A* レコード形式: CODEREC
+     A*=====================================================================
+     A                                      UNIQUE
+     A          R CODEREC
+     A            CODETYPE      30A         COLHDG('コード種別')
+     A            CODEVAL       30A         COLHDG('コード値')
+     A            DESC         120A         COLHDG('説明')
+     A            DISPORD        9P 0       COLHDG('表示順')
+     A            ISACTIVE       1A         COLHDG('有効' 'フラグ')
+     A            CRTDATE         L         COLHDG('作成日付')
+     A            CRTTIM          T         COLHDG('作成時刻')
+     A          K CODETYPE
+     A          K CODEVAL

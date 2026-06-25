@@ -1,0 +1,143 @@
+             PGM
+/*===============================================================*/
+/* プログラム名: COMPBIZ                                          */
+/* 説明: 業務ロジックプログラムのコンパイル                        */
+/* 機能:                                                          */
+/*   1. 受注登録プログラム（CREATESORD）のコンパイル              */
+/*   2. 出荷確定プログラム（CONFIRMSHP）のコンパイル              */
+/*   3. 請求発行プログラム（CREATEINV）のコンパイル               */
+/*   4. 在庫トリガー（INVTRIGGER）のコンパイル                    */
+/*===============================================================*/
+
+             DCL        VAR(&MSGID) TYPE(*CHAR) LEN(7)
+             DCL        VAR(&MSGDTA) TYPE(*CHAR) LEN(256)
+             DCL        VAR(&ERRCOUNT) TYPE(*DEC) LEN(3 0) VALUE(0)
+
+             SNDPGMMSG  MSG('業務ロジックプログラムのコンパイルを開始します') TOPGMQ(*EXT) +
+                          MSGTYPE(*INFO)
+
+/*---------------------------------------------------------------*/
+/* 1. 受注登録プログラム（CREATESORD）                            */
+/*---------------------------------------------------------------*/
+             SNDPGMMSG  MSG('CREATESORD をコンパイル中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRCRESRD))
+
+             CRTRPGMOD  MODULE(HANBAI/CREATESORD) SRCFILE(HANBAI/QRPGLESRC) +
+                          SRCMBR(CREATESORD) DBGVIEW(*SOURCE) REPLACE(*YES)
+
+             CRTPGM     PGM(HANBAI/CREATESORD) MODULE(HANBAI/CREATESORD) ACTGRP(*NEW) +
+                          TEXT('受注登録プログラム') REPLACE(*YES)
+
+             SNDPGMMSG  MSG('CREATESORD のコンパイル完了') TOPGMQ(*EXT) MSGTYPE(*COMP)
+
+             GOTO       CMDLBL(CMPCNFSHP)
+
+ ERRCRESRD:
+             CHGVAR     VAR(&ERRCOUNT) VALUE(&ERRCOUNT + 1)
+             SNDPGMMSG  MSG('CREATESORD のコンパイルエラー') TOPGMQ(*EXT) MSGTYPE(*DIAG)
+
+/*---------------------------------------------------------------*/
+/* 2. 出荷確定プログラム（CONFIRMSHP）                            */
+/*---------------------------------------------------------------*/
+ CMPCNFSHP:
+             SNDPGMMSG  MSG('CONFIRMSHP をコンパイル中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRCNFSHP))
+
+             CRTRPGMOD  MODULE(HANBAI/CONFIRMSHP) SRCFILE(HANBAI/QRPGLESRC) +
+                          SRCMBR(CONFIRMSHP) DBGVIEW(*SOURCE) REPLACE(*YES)
+
+             CRTPGM     PGM(HANBAI/CONFIRMSHP) MODULE(HANBAI/CONFIRMSHP) ACTGRP(*NEW) +
+                          TEXT('出荷確定プログラム') REPLACE(*YES)
+
+             SNDPGMMSG  MSG('CONFIRMSHP のコンパイル完了') TOPGMQ(*EXT) MSGTYPE(*COMP)
+
+             GOTO       CMDLBL(CMPCRTINV)
+
+ ERRCNFSHP:
+             CHGVAR     VAR(&ERRCOUNT) VALUE(&ERRCOUNT + 1)
+             SNDPGMMSG  MSG('CONFIRMSHP のコンパイルエラー') TOPGMQ(*EXT) MSGTYPE(*DIAG)
+
+/*---------------------------------------------------------------*/
+/* 3. 請求発行プログラム（CREATEINV）                             */
+/*---------------------------------------------------------------*/
+ CMPCRTINV:
+             SNDPGMMSG  MSG('CREATEINV をコンパイル中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRCRTINV))
+
+             CRTRPGMOD  MODULE(HANBAI/CREATEINV) SRCFILE(HANBAI/QRPGLESRC) SRCMBR(CREATEINV) +
+                          DBGVIEW(*SOURCE) REPLACE(*YES)
+
+             CRTPGM     PGM(HANBAI/CREATEINV) MODULE(HANBAI/CREATEINV) ACTGRP(*NEW) +
+                          TEXT('請求発行プログラム') REPLACE(*YES)
+
+             SNDPGMMSG  MSG('CREATEINV のコンパイル完了') TOPGMQ(*EXT) MSGTYPE(*COMP)
+
+             GOTO       CMDLBL(CMPINVTRG)
+
+ ERRCRTINV:
+             CHGVAR     VAR(&ERRCOUNT) VALUE(&ERRCOUNT + 1)
+             SNDPGMMSG  MSG('CREATEINV のコンパイルエラー') TOPGMQ(*EXT) MSGTYPE(*DIAG)
+
+/*---------------------------------------------------------------*/
+/* 4. 在庫トリガー（INVTRIGGER）                                  */
+/*---------------------------------------------------------------*/
+ CMPINVTRG:
+             SNDPGMMSG  MSG('INVTRIGGER をコンパイル中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRINVTRG))
+
+             CRTRPGMOD  MODULE(HANBAI/INVTRIGGER) SRCFILE(HANBAI/QRPGLESRC) +
+                          SRCMBR(INVTRIGGER) DBGVIEW(*SOURCE) REPLACE(*YES)
+
+             CRTPGM     PGM(HANBAI/INVTRIGGER) MODULE(HANBAI/INVTRIGGER) ACTGRP(*NEW) +
+                          TEXT('在庫更新トリガープログラム') REPLACE(*YES)
+
+             SNDPGMMSG  MSG('INVTRIGGER のコンパイル完了') TOPGMQ(*EXT) MSGTYPE(*COMP)
+
+             GOTO       CMDLBL(SETUPTRIG)
+
+ ERRINVTRG:
+             CHGVAR     VAR(&ERRCOUNT) VALUE(&ERRCOUNT + 1)
+             SNDPGMMSG  MSG('INVTRIGGER のコンパイルエラー') TOPGMQ(*EXT) MSGTYPE(*DIAG)
+
+/*---------------------------------------------------------------*/
+/* 5. トリガー設定                                                */
+/*---------------------------------------------------------------*/
+ SETUPTRIG:
+             SNDPGMMSG  MSG('在庫トリガーを設定中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRTRGSET))
+
+             /* 既存のトリガーを削除（存在する場合） */
+             RMVPFTRG   FILE(HANBAI/INVENTORYP) TRGTIME(*AFTER) TRGEVENT(*UPDATE)
+             MONMSG     MSGID(CPF0000)
+
+             /* トリガーを追加 */
+             ADDPFTRG   FILE(HANBAI/INVENTORYP) TRGTIME(*AFTER) TRGEVENT(*UPDATE) +
+                          PGM(HANBAI/INVTRIGGER) TRGUPDCND(*CHANGE)
+
+             SNDPGMMSG  MSG('在庫トリガーの設定完了') TOPGMQ(*EXT) MSGTYPE(*COMP)
+
+             GOTO       CMDLBL(COMPLETE)
+
+ ERRTRGSET:
+             CHGVAR     VAR(&ERRCOUNT) VALUE(&ERRCOUNT + 1)
+             SNDPGMMSG  MSG('トリガー設定エラー') TOPGMQ(*EXT) MSGTYPE(*DIAG)
+
+/*---------------------------------------------------------------*/
+/* 完了処理                                                       */
+/*---------------------------------------------------------------*/
+ COMPLETE:
+             IF         COND(&ERRCOUNT *EQ 0) THEN(DO)
+                SNDPGMMSG  MSG('すべてのプログラムのコンパイルが完了しました') TOPGMQ(*EXT) +
+                             MSGTYPE(*COMP)
+             ENDDO
+             ELSE       CMD(DO)
+                SNDPGMMSG  MSG('一部のプログラムでエラーが発生しました') TOPGMQ(*EXT) +
+                             MSGTYPE(*DIAG)
+             ENDDO
+
+             ENDPGM

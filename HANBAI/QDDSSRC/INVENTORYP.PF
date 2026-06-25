@@ -1,0 +1,30 @@
+      *===============================================================
+      * 物理ファイル: INVENTORYP (在庫)
+      * ライブラリ: DEMOAPP
+      * 説明: 倉庫×商品の在庫数量管理
+      *===============================================================
+     A                                      UNIQUE
+     A          R INVREC
+     A                                      TEXT('在庫レコード')
+     A*
+     A* キーフィールド（複合キー）
+     A            WHID           4P 0       COLHDG('倉庫ID')
+     A                                      TEXT('倉庫ID')
+     A            ITEMID         9P 0       COLHDG('商品ID')
+     A                                      TEXT('商品ID')
+     A*
+     A* 在庫数量
+     A            QTYOH         15P 3       COLHDG('現在庫数')
+     A                                      TEXT('現在庫数')
+     A            QTYALC        15P 3       COLHDG('引当済' '数量')
+     A                                      TEXT('引当済数量')
+     A            QTYAVL        15P 3       COLHDG('引当可能' '数量')
+     A                                      TEXT('引当可能数量')
+     A*
+     A* 監査情報
+     A            LSTUPD          Z         COLHDG('最終' '更新日時')
+     A                                      TEXT('最終更新日時')
+     A*
+     A* キー定義
+     A          K WHID
+     A          K ITEMID

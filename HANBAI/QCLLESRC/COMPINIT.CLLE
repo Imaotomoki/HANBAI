@@ -1,0 +1,143 @@
+             PGM
+/*=====================================================================*/
+/* プログラム名: COMPINIT                                               */
+/* 説明: 初期データ投入用RPGプログラムのコンパイル                        */
+/* ライブラリ: HANBAI                                                  */
+/*=====================================================================*/
+
+             DCL        VAR(&MSGID) TYPE(*CHAR) LEN(7)
+             DCL        VAR(&MSGDTA) TYPE(*CHAR) LEN(512)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+/*---------------------------------------------------------------------*/
+/* 開始メッセージ                                                       */
+/*---------------------------------------------------------------------*/
+             SNDPGMMSG  MSG('初期データ投入プログラムのコンパイルを開始します') TOPGMQ(*EXT) +
+                          MSGTYPE(*INFO)
+
+/*---------------------------------------------------------------------*/
+/* RPGソースファイルの作成（存在しない場合）                             */
+/*---------------------------------------------------------------------*/
+             CRTSRCPF   FILE(HANBAI/QRPGLESRC) RCDLEN(112) TEXT('RPG ILE Source Files')
+             MONMSG     MSGID(CPF7302) /* 既に存在する場合は無視 */
+
+/*---------------------------------------------------------------------*/
+/* 1. INITCODE のコンパイル                                             */
+/*---------------------------------------------------------------------*/
+             SNDPGMMSG  MSG('INITCODE をコンパイル中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             CRTRPGMOD  MODULE(HANBAI/INITCODE) SRCFILE(HANBAI/QRPGLESRC) SRCMBR(INITCODE) +
+                          DBGVIEW(*SOURCE)
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+             CRTPGM     PGM(HANBAI/INITCODE) MODULE(HANBAI/INITCODE) ACTGRP(*NEW) +
+                          TEXT('コードマスタ初期データ投入')
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+/*---------------------------------------------------------------------*/
+/* 2. INITWH のコンパイル                                               */
+/*---------------------------------------------------------------------*/
+             SNDPGMMSG  MSG('INITWH をコンパイル中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             CRTRPGMOD  MODULE(HANBAI/INITWH) SRCFILE(HANBAI/QRPGLESRC) SRCMBR(INITWH) +
+                          DBGVIEW(*SOURCE)
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+             CRTPGM     PGM(HANBAI/INITWH) MODULE(HANBAI/INITWH) ACTGRP(*NEW) +
+                          TEXT('倉庫マスタ初期データ投入')
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+/*---------------------------------------------------------------------*/
+/* 3. INITCUST のコンパイル                                             */
+/*---------------------------------------------------------------------*/
+             SNDPGMMSG  MSG('INITCUST をコンパイル中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             CRTRPGMOD  MODULE(HANBAI/INITCUST) SRCFILE(HANBAI/QRPGLESRC) SRCMBR(INITCUST) +
+                          DBGVIEW(*SOURCE)
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+             CRTPGM     PGM(HANBAI/INITCUST) MODULE(HANBAI/INITCUST) ACTGRP(*NEW) +
+                          TEXT('顧客マスタ初期データ投入')
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+/*---------------------------------------------------------------------*/
+/* 4. INITITEM のコンパイル                                             */
+/*---------------------------------------------------------------------*/
+             SNDPGMMSG  MSG('INITITEM をコンパイル中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             CRTRPGMOD  MODULE(HANBAI/INITITEM) SRCFILE(HANBAI/QRPGLESRC) SRCMBR(INITITEM) +
+                          DBGVIEW(*SOURCE)
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+             CRTPGM     PGM(HANBAI/INITITEM) MODULE(HANBAI/INITITEM) ACTGRP(*NEW) +
+                          TEXT('商品マスタ初期データ投入')
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+/*---------------------------------------------------------------------*/
+/* 5. INITFX のコンパイル                                               */
+/*---------------------------------------------------------------------*/
+             SNDPGMMSG  MSG('INITFX をコンパイル中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             CRTRPGMOD  MODULE(HANBAI/INITFX) SRCFILE(HANBAI/QRPGLESRC) SRCMBR(INITFX) +
+                          DBGVIEW(*SOURCE)
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+             CRTPGM     PGM(HANBAI/INITFX) MODULE(HANBAI/INITFX) ACTGRP(*NEW) +
+                          TEXT('為替レート初期データ投入')
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+/*---------------------------------------------------------------------*/
+/* 6. INITINV のコンパイル                                              */
+/*---------------------------------------------------------------------*/
+             SNDPGMMSG  MSG('INITINV をコンパイル中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             CRTRPGMOD  MODULE(HANBAI/INITINV) SRCFILE(HANBAI/QRPGLESRC) SRCMBR(INITINV) +
+                          DBGVIEW(*SOURCE)
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+             CRTPGM     PGM(HANBAI/INITINV) MODULE(HANBAI/INITINV) ACTGRP(*NEW) +
+                          TEXT('在庫初期データ投入')
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+/*---------------------------------------------------------------------*/
+/* 7. INITUSER のコンパイル                                             */
+/*---------------------------------------------------------------------*/
+             SNDPGMMSG  MSG('INITUSER をコンパイル中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             CRTRPGMOD  MODULE(HANBAI/INITUSER) SRCFILE(HANBAI/QRPGLESRC) SRCMBR(INITUSER) +
+                          DBGVIEW(*SOURCE)
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+             CRTPGM     PGM(HANBAI/INITUSER) MODULE(HANBAI/INITUSER) ACTGRP(*NEW) +
+                          TEXT('ユーザーマスタ初期データ投入')
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+/*---------------------------------------------------------------------*/
+/* 8. INITDATA のコンパイル                                             */
+/*---------------------------------------------------------------------*/
+             SNDPGMMSG  MSG('INITDATA をコンパイル中...') TOPGMQ(*EXT) MSGTYPE(*INFO)
+
+             CRTBNDCL   PGM(HANBAI/INITDATA) SRCFILE(HANBAI/QCLLESRC) SRCMBR(INITDATA) +
+                          DBGVIEW(*SOURCE) TEXT('初期データ一括投入制御プログラム')
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+/*---------------------------------------------------------------------*/
+/* 完了メッセージ                                                       */
+/*---------------------------------------------------------------------*/
+             SNDPGMMSG  MSG('全プログラムのコンパイルが正常に完了しました') TOPGMQ(*EXT) +
+                          MSGTYPE(*COMP)
+
+             GOTO       CMDLBL(ENDPGM)
+
+/*---------------------------------------------------------------------*/
+/* エラー処理                                                           */
+/*---------------------------------------------------------------------*/
+ ERROR:      RCVMSG     MSGTYPE(*EXCP) MSGDTA(&MSGDTA) MSGID(&MSGID)
+
+             SNDPGMMSG  MSG('コンパイルでエラーが発生しました') TOPGMQ(*EXT) MSGTYPE(*DIAG)
+
+/*---------------------------------------------------------------------*/
+/* プログラム終了                                                       */
+/*---------------------------------------------------------------------*/
+ ENDPGM:     ENDPGM
