@@ -1,0 +1,34 @@
+      *===============================================================
+      * 物理ファイル: INVOICELP (請求明細)
+      * ライブラリ: DEMOAPP
+      * 説明: 請求の商品明細管理
+      *===============================================================
+     A                                      UNIQUE
+     A          R INVLREC
+     A                                      TEXT('請求明細レコード')
+     A*
+     A* キーフィールド（複合キー）
+     A            INVID         18P 0       COLHDG('請求ID')
+     A                                      TEXT('請求ID')
+     A            LINENO         9P 0       COLHDG('明細' '行番号')
+     A                                      TEXT('明細行番号')
+     A*
+     A* 商品情報
+     A            ITEMID         9P 0       COLHDG('商品ID')
+     A                                      TEXT('商品ID')
+     A            DESC         240A         COLHDG('明細説明')
+     A                                      TEXT('明細説明')
+     A*
+     A* 数量・単価
+     A            QTY           15P 3       COLHDG('数量')
+     A                                      TEXT('数量')
+     A            UNITPRC       15P 4       COLHDG('単価')
+     A                                      TEXT('単価')
+     A            TAXRATE        5P 3       COLHDG('税率')
+     A                                      TEXT('税率')
+     A            LINEAMT       15P 2       COLHDG('明細金額')
+     A                                      TEXT('明細金額')
+     A*
+     A* キー定義
+     A          K INVID
+     A          K LINENO

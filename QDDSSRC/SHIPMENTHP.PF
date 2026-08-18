@@ -1,0 +1,51 @@
+      *===============================================================
+      * 物理ファイル: SHIPMENTHP (出荷ヘッダ)
+      * ライブラリ: DEMOAPP
+      * 説明: 出荷指示・実績の管理
+      *===============================================================
+     A                                      UNIQUE
+     A          R SHPREC
+     A                                      TEXT('出荷ヘッダレコード')
+     A*
+     A* キーフィールド
+     A            SHPID         18P 0       COLHDG('出荷ID')
+     A                                      TEXT('出荷ID')
+     A*
+     A* 業務キー
+     A            SHPNUM        20A         COLHDG('出荷番号')
+     A                                      TEXT('出荷番号(業務キー)')
+     A*
+     A* 関連情報
+     A            SOID          18P 0       COLHDG('受注ID')
+     A                                      TEXT('受注ID')
+     A            WHID           4P 0       COLHDG('倉庫ID')
+     A                                      TEXT('出荷倉庫ID')
+     A*
+     A* 出荷情報
+     A            SHPDATE        8S 0       COLHDG('出荷日')
+     A                                      TEXT('出荷日')
+     A            CARRIER       60O         COLHDG('輸送業者')
+     A                                      TEXT('輸送業者')
+     A            TRACKNO       50A         COLHDG('送り状' '番号')
+     A                                      TEXT('送り状番号')
+     A*
+     A* ステータス
+     A            STATUS        12A         COLHDG('ステータス')
+     A                                      TEXT('ステータス')
+     A*
+     A* 監査情報
+     A            CRTUSER       30O         COLHDG('作成者')
+     A                                      TEXT('作成ユーザー')
+     A            CRTDATE        8S 0       COLHDG('作成日')
+     A                                      TEXT('作成日付')
+     A            CRTTIM         6S 0       COLHDG('作成時刻')
+     A                                      TEXT('作成時刻')
+     A            UPDUSER       30O         COLHDG('更新者')
+     A                                      TEXT('更新ユーザー')
+     A            UPDDATE        8S 0       COLHDG('更新日')
+     A                                      TEXT('更新日付')
+     A            UPDTIM         6S 0       COLHDG('更新時刻')
+     A                                      TEXT('更新時刻')
+     A*
+     A* キー定義
+     A          K SHPID

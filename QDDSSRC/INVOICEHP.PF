@@ -1,0 +1,63 @@
+      *===============================================================
+      * 物理ファイル: INVOICEHP (請求ヘッダ)
+      * ライブラリ: DEMOAPP
+      * 説明: 請求書の管理
+      *===============================================================
+     A                                      UNIQUE
+     A          R INVREC
+     A                                      TEXT('請求ヘッダレコード')
+     A*
+     A* キーフィールド
+     A            INVID         18P 0       COLHDG('請求ID')
+     A                                      TEXT('請求ID')
+     A*
+     A* 業務キー
+     A            INVNUM        20A         COLHDG('請求番号')
+     A                                      TEXT('請求番号(業務キー)')
+     A*
+     A* 顧客・受注情報
+     A            CUSTID         9P 0       COLHDG('顧客ID')
+     A                                      TEXT('顧客ID')
+     A            SOID          18P 0       COLHDG('受注ID')
+     A                                      TEXT('受注ID')
+     A*
+     A* 請求情報
+     A            INVDATE        8P 0       COLHDG('請求日')
+     A                                      TEXT('請求日')
+     A            DUEDATE        8P 0       COLHDG('支払期限')
+     A                                      TEXT('支払期限')
+     A            CURRCD         3A         COLHDG('通貨')
+     A                                      TEXT('通貨コード')
+     A*
+     A* 金額情報
+     A            SUBTOT        15P 2       COLHDG('小計')
+     A                                      TEXT('小計')
+     A            TAXAMT        15P 2       COLHDG('税額')
+     A                                      TEXT('税額')
+     A            TOTAMT        15P 2       COLHDG('合計金額')
+     A                                      TEXT('合計金額')
+     A            PAIDAMT       15P 2       COLHDG('入金済額')
+     A                                      TEXT('入金済額')
+     A            BALANCE       15P 2       COLHDG('未収残高')
+     A                                      TEXT('未収残高')
+     A*
+     A* ステータス
+     A            STATUS        12A         COLHDG('ステータス')
+     A                                      TEXT('ステータス')
+     A*
+     A* 監査情報
+     A            CRTUSER       30O         COLHDG('作成者')
+     A                                      TEXT('作成ユーザー')
+     A            CRTDATE        8P 0       COLHDG('作成日')
+     A                                      TEXT('作成日付')
+     A            CRTTIM         6P 0       COLHDG('作成時刻')
+     A                                      TEXT('作成時刻')
+     A            UPDUSER       30O         COLHDG('更新者')
+     A                                      TEXT('更新ユーザー')
+     A            UPDDATE        8P 0       COLHDG('更新日')
+     A                                      TEXT('更新日付')
+     A            UPDTIM         6P 0       COLHDG('更新時刻')
+     A                                      TEXT('更新時刻')
+     A*
+     A* キー定義
+     A          K INVID

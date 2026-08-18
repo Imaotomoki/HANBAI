@@ -1,0 +1,31 @@
+      *===============================================================
+      * 物理ファイル: FXRATEP (為替レート)
+      * ライブラリ: DEMOAPP
+      * 説明: 日付・通貨ペア別の為替レート管理
+      *===============================================================
+     A                                      UNIQUE
+     A          R FXREC
+     A                                      TEXT('為替レートレコード')
+     A*
+     A* キーフィールド（複合キー）
+     A            RATEDATE       8P 0       COLHDG('適用日')
+     A                                      TEXT('レート適用日')
+     A            FROMCUR        3A         COLHDG('換算元' '通貨')
+     A                                      TEXT('換算元通貨')
+     A            TOCUR          3A         COLHDG('換算先' '通貨')
+     A                                      TEXT('換算先通貨')
+     A*
+     A* レート
+     A            RATE          10P 6       COLHDG('為替' 'レート')
+     A                                      TEXT('為替レート')
+     A*
+     A* 監査情報
+     A            CRTDATE        8P 0       COLHDG('作成日')
+     A                                      TEXT('作成日付')
+     A            CRTTIM         6P 0       COLHDG('作成時刻')
+     A                                      TEXT('作成時刻')
+     A*
+     A* キー定義
+     A          K RATEDATE
+     A          K FROMCUR
+     A          K TOCUR

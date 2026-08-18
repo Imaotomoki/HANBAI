@@ -1,0 +1,63 @@
+      *===============================================================
+      * 物理ファイル: PAYMENTP (入金)
+      * ライブラリ: DEMOAPP
+      * 説明: 顧客からの入金記録と消込管理
+      *===============================================================
+     A                                      UNIQUE
+     A          R PAYREC
+     A                                      TEXT('入金レコード')
+     A*
+     A* キーフィールド
+     A            PAYID         18P 0       COLHDG('入金ID')
+     A                                      TEXT('入金ID')
+     A*
+     A* 業務キー
+     A            PAYNUM        20A         COLHDG('入金番号')
+     A                                      TEXT('入金番号(業務キー)')
+     A*
+     A* 顧客・請求情報
+     A            CUSTID         9P 0       COLHDG('顧客ID')
+     A                                      TEXT('顧客ID')
+     A            INVID         18P 0       COLHDG('請求ID')
+     A                                      TEXT('請求ID')
+     A*
+     A* 入金情報
+     A            PAYDATE        8P 0       COLHDG('入金日')
+     A                                      TEXT('入金日')
+     A            PAYMETH       20O         COLHDG('入金方法')
+     A                                      TEXT('入金方法')
+     A            CURRCD         3A         COLHDG('通貨')
+     A                                      TEXT('入金通貨')
+     A*
+     A* 金額情報
+     A            AMOUNT        15P 2       COLHDG('入金額')
+     A                                      TEXT('入金額')
+     A            FXRATE        10P 6       COLHDG('為替' 'レート')
+     A                                      TEXT('適用為替レート')
+     A            BASEAMT       15P 2       COLHDG('換算額')
+     A                                      TEXT('基準通貨換算額')
+     A*
+     A* 参照情報
+     A            REFNO         60A         COLHDG('参照番号')
+     A                                      TEXT('参照番号')
+     A*
+     A* ステータス
+     A            STATUS        12A         COLHDG('ステータス')
+     A                                      TEXT('ステータス')
+     A*
+     A* 監査情報
+     A            CRTUSER       30O         COLHDG('作成者')
+     A                                      TEXT('作成ユーザー')
+     A            CRTDATE        8P 0       COLHDG('作成日')
+     A                                      TEXT('作成日付')
+     A            CRTTIM         6P 0       COLHDG('作成時刻')
+     A                                      TEXT('作成時刻')
+     A            UPDUSER       30O         COLHDG('更新者')
+     A                                      TEXT('更新ユーザー')
+     A            UPDDATE        8P 0       COLHDG('更新日')
+     A                                      TEXT('更新日付')
+     A            UPDTIM         6P 0       COLHDG('更新時刻')
+     A                                      TEXT('更新時刻')
+     A*
+     A* キー定義
+     A          K PAYID
